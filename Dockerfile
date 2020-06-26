@@ -4,7 +4,7 @@
 ### Desc:   Build a container that sends a heartbeat message every 30 seconds
 ###         using the hop library.
 ###
-FROM scimma/base:0.1.1
+FROM scimma/client:0.1.9
 RUN  mkdir -p /usr/local/src
 RUN yum -y install git unzip
 RUN cd /usr/local/src && \
