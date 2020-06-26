@@ -1,0 +1,11 @@
+\#*
+.\#*
+*~
+__pycache__/*
+dist/
+build/
+*.egg-info
+doc/_build/
+*.pyc
+*.coverage
+gcn2scimma/_version.py
