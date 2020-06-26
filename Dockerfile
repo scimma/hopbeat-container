@@ -18,4 +18,4 @@ ADD scripts/runHopBeat.py /root/runHopBeat.py
 RUN chmod ugo+rx /root/hopBeat
 RUN chmod ugo+rx /root/runHopBeat.py
 WORKDIR /tmp
-ENTRYPOINT ["/root/runGcn2Hop.py"]
+ENTRYPOINT ["/root/runHopBeat.py"]

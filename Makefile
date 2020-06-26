@@ -11,7 +11,7 @@ REGION  := us-west-2
 AWSREG  := 585193511743.dkr.ecr.us-west-2.amazonaws.com
 MAJOR   := 0
 MINOR   := 0
-RELEASE := 1
+RELEASE := 2
 
 RELEASE_TAG := $(MAJOR).$(MINOR).$(RELEASE)
 
