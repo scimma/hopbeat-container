@@ -41,3 +41,4 @@ while (True):
     sC.write(message);
     print(message)
     count = count + 1
+    sleep(30)
