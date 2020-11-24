@@ -23,4 +23,4 @@ jobs:
           AWS_ACCESS_KEY: ${{ secrets.PUSHUSER }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.PUSHSECRET }}
           AWS_DEFAULT_REGION: us-west-2
-        run: make push
+        run: export AWS_ACCESS_KEY AWS_SECRET_ACCESS_KEY AWS_DEFAULT_REGION && make push 
