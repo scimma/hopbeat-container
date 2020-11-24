@@ -26,9 +26,6 @@ container: Dockerfile
 	docker build -f $< -t $(CNT_IMG) .
 	docker tag $(CNT_IMG) $(CNT_LTST)
 
-#test:
-#	cd test && SCIMMA_TEST_TAG=$(TAG) pytest -v
-
 set-release-tags:
 	@$(eval RELEASE_TAG := $(shell echo $(GITHUB_REF) | awk -F- '{print $$2}'))
 	@echo RELEASE_TAG =  $(RELEASE_TAG)
@@ -38,15 +35,15 @@ set-release-tags:
 	@echo MINOR_TAG = $(MINOR_TAG)
 
 push: 
-#	@(echo $(RELEASE_TAG) | grep -P '^[0-9]+\.[0-9]+\.[0-9]+$$' > /dev/null ) || (echo Bad release tag: $(RELEASE_TAG) && exit 1)
-	./bin/awsDockerLogin $(REGION) $(AWSREG) >/dev/null 2>/dev/null
+	@(echo $(RELEASE_TAG) | grep -P '^[0-9]+\.[0-9]+\.[0-9]+$$' > /dev/null ) || (echo Bad release tag: $(RELEASE_TAG) && exit 1)
+	aws ecr get-login-password | docker login --username AWS --password-stdin $(AWSREG)
 	docker tag $(CNT_IMG) $(AWSREG)/$(CNT_NAME):$(RELEASE_TAG)
 	docker tag $(CNT_IMG) $(AWSREG)/$(CNT_NAME):$(MAJOR)
 	docker tag $(CNT_IMG) $(AWSREG)/$(CNT_NAME):$(MAJOR).$(MINOR)
 	docker push $(AWSREG)/$(CNT_NAME):$(RELEASE_TAG)
 	docker push $(AWSREG)/$(CNT_NAME):$(MAJOR)
 	docker push $(AWSREG)/$(CNT_NAME):$(MAJOR).$(MINOR)
-#	rm -f $(HOME)/.docker/config.json
+	rm -f $(HOME)/.docker/config.json
 
 clean:
 	rm -f *~
