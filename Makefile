@@ -1,21 +1,16 @@
 ##
-## For tagging the container:
+## The "push" target assumes that AWS credentials 
+## have been configured.
 ##
 CNT_NAME := scimma/hopbeat
+REGION   := us-west-2
+AWSREG   := 585193511743.dkr.ecr.us-west-2.amazonaws.com
 
 TAG      := $(shell git log -1 --pretty=%H || echo MISSING )
 CNT_IMG  := $(CNT_NAME):$(TAG)
 CNT_LTST := $(CNT_NAME):latest
 
-REGION  := us-west-2
-AWSREG  := 585193511743.dkr.ecr.us-west-2.amazonaws.com
-MAJOR   := 0
-MINOR   := 0
-RELEASE := 6
-
-RELEASE_TAG := $(MAJOR).$(MINOR).$(RELEASE)
-
-.PHONY: test set-release-tags push clean client server all
+.PHONY: set-release-tags push test clean all container
 
 all: container
 
@@ -34,18 +29,16 @@ set-release-tags:
 	@$(eval MINOR_TAG   := $(shell echo $(RELEASE_TAG) | awk -F. '{print $$2}'))
 	@echo MINOR_TAG = $(MINOR_TAG)
 
-push: 
+push: set-release-tags
 	@(echo $(RELEASE_TAG) | grep -P '^[0-9]+\.[0-9]+\.[0-9]+$$' > /dev/null ) || (echo Bad release tag: $(RELEASE_TAG) && exit 1)
 	/usr/local/bin/aws ecr get-login-password | docker login --username AWS --password-stdin $(AWSREG)
 	docker tag $(CNT_IMG) $(AWSREG)/$(CNT_NAME):$(RELEASE_TAG)
-	docker tag $(CNT_IMG) $(AWSREG)/$(CNT_NAME):$(MAJOR)
-	docker tag $(CNT_IMG) $(AWSREG)/$(CNT_NAME):$(MAJOR).$(MINOR)
+	docker tag $(CNT_IMG) $(AWSREG)/$(CNT_NAME):$(MAJOR_TAG)
+	docker tag $(CNT_IMG) $(AWSREG)/$(CNT_NAME):$(MAJOR_TAG).$(MINOR_TAG)
 	docker push $(AWSREG)/$(CNT_NAME):$(RELEASE_TAG)
-	docker push $(AWSREG)/$(CNT_NAME):$(MAJOR)
-	docker push $(AWSREG)/$(CNT_NAME):$(MAJOR).$(MINOR)
+	docker push $(AWSREG)/$(CNT_NAME):$(MAJOR_TAG)
+	docker push $(AWSREG)/$(CNT_NAME):$(MAJOR_TAG).$(MINOR_TAG)
 	rm -f $(HOME)/.docker/config.json
+test:
 
 clean:
-	rm -f *~
-	rm -f downloads/*
-	if [ -d downloads ]; then  rmdir downloads else /bin/true; fi
