@@ -20,7 +20,7 @@ jobs:
           sudo ./aws/install --bin-dir /usr/local/bin
       - name: push
         env:
-          AWS_ACCESS_KEY: ${{ secrets.PUSHUSER }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.PUSHUSER }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.PUSHSECRET }}
           AWS_DEFAULT_REGION: us-west-2
         run: export AWS_ACCESS_KEY AWS_SECRET_ACCESS_KEY AWS_DEFAULT_REGION && make push 
