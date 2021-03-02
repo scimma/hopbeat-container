@@ -25,22 +25,20 @@ def getCreds (region, secret):
 
 def writeConfig (loc, creds):
     cfh = open(loc, "w")
-    cfh.write("security.protocol=SASL_SSL\n")
-    cfh.write("sasl.username=%s\n" % creds["user"])
-    cfh.write("sasl.password=%s\n" % creds["pass"])
-    cfh.write("sasl.mechanism=SCRAM-SHA-512\nssl.ca.location=/etc/pki/tls/certs/ca-bundle.trust.crt\n")
+    cfh.write("[auth]\n")
+    cfh.write("username = \"%s\"\n" % creds["user"])
+    cfh.write("password = \"%s\"\n" % creds["pass"])
     cfh.close()
 
 class ScimmaConnection:
 
-    def __init__ (self, scimmaUrl, scimmaConfFile):
+    def __init__ (self, scimmaUrl):
         self.scimmaUrl      = scimmaUrl
-        self.scimmaConfFile = scimmaConfFile
         self.msgCount       = 0
 
     def open (self):
-        self.stream       = io.Stream(config=self.scimmaConfFile, format="json")
-        self.streamHandle = self.stream.open(self.scimmaUrl, mode="w", format="json")
+        self.stream       = io.Stream()
+        self.streamHandle = self.stream.open(self.scimmaUrl, mode="w")
 
     def write (self, msg):
         self.streamHandle.write(msg)

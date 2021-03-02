@@ -26,7 +26,7 @@ print("hopBeat starting")
 print("SCiMMA server URL:  %s"   % scimmaUrl)
 print("SCiMMA config file: %s\n" % scimmaConfFile)
 
-sC = ut.ScimmaConnection(scimmaUrl, scimmaConfFile)
+sC = ut.ScimmaConnection(scimmaUrl)
 sC.open()
 
 heartbeats = ["listen", "Listen", "LISTEN", "listen to my heart beat"]

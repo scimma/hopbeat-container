@@ -13,8 +13,8 @@ import os
 
 region    = "us-west-2"
 secret    = "dev-gcn2hop-hopcreds"
-configDir = "/root/share"
-Location  = "%s/kafkacat.conf" % configDir
+configDir = "/root/shared"
+Location  = "%s/config.toml" % configDir
 hopUrl    = "kafka://dev.hop.scimma.org:9092/heartbeat"
 
 ## Line buffer stdout and stderr
