@@ -17,6 +17,15 @@ configDir = "/root/shared"
 Location  = "%s/config.toml" % configDir
 hopUrl    = "kafka://dev.hop.scimma.org:9092/heartbeat"
 
+if (os.env('HOP_SECRET') is not None):
+    secret = os.env('HOP_SECRET')
+
+if (os.env('HOP_REGION') is not None):
+    region = os.env('HOP_REGION')
+
+if (os.env('HOP_SERVER') is not None):
+    hopUrl = "kafka://%s/heartbeat" % os.env('HOP_SERVER')
+
 ## Line buffer stdout and stderr
 sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', buffering=1)
 sys.stderr = os.fdopen(sys.stderr.fileno(), 'w', buffering=1)
