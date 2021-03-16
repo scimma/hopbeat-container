@@ -11,11 +11,12 @@ import pytz
 import sys
 import os
 
-region    = "us-west-2"
-secret    = "dev-gcn2hop-hopcreds"
-configDir = "/root/shared"
-Location  = "%s/config.toml" % configDir
-hopUrl    = "kafka://dev.hop.scimma.org:9092/heartbeat"
+region       = "us-west-2"
+secret       = "dev-gcn2hop-hopcreds"
+configDir    = "/root/shared"
+Location     = "%s/config.toml" % configDir
+hopUrl       = "kafka://dev.hop.scimma.org:9092/heartbeat"
+hopInterval  = "30"
 
 if (os.env('HOP_SECRET') is not None):
     secret = os.env('HOP_SECRET')
@@ -25,6 +26,9 @@ if (os.env('HOP_REGION') is not None):
 
 if (os.env('HOP_SERVER') is not None):
     hopUrl = "kafka://%s/heartbeat" % os.env('HOP_SERVER')
+
+if (os.env('HOP_INTERVAL') is not None):
+    hopInterval = os.env{'HOP_INTERVAL'}
 
 ## Line buffer stdout and stderr
 sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', buffering=1)
@@ -39,6 +43,6 @@ while True:
     print("== Starting hopBeat")
     print("Date: %s" % datetime.now(pytz.timezone('America/New_York')))
     print("======================================")
-    exitVal = os.system("/root/hopBeat -F %s --scimma=%s" % (Location, hopUrl))
+    exitVal = os.system("/root/hopBeat -F %s --scimma=%s --interval=%s" % (Location, hopUrl, hopInterval))
     print("hopBeat exited with os.system returning: %d" % exitVal)
     time.sleep(30)

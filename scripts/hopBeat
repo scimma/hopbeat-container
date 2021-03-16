@@ -15,8 +15,9 @@ cHelp  = "SCiMMA client configuration file"
 sHelp  = "SCiMMA server URL"
 sUrl   = "kafka://dev.hop.scimma.org:9092/heartbeat"
 p = OptionParser(usage="Usage: %prog [options]")
-p.add_option("",   "--scimma", dest="scimmaUrl", default=sUrl, help=sHelp)
-p.add_option("-F", "--config", dest="scimmaConfFile", default="~/shared/kafkacat.conf", help=cHelp)
+p.add_option("",   "--scimma",   dest="scimmaUrl",      default=sUrl, help=sHelp)
+p.add_option("",   "--interval", dest="interval",       default=30
+p.add_option("-F", "--config",   dest="scimmaConfFile", default="~/shared/kafkacat.conf", help=cHelp)
 (o, a) = p.parse_args()
 
 scimmaUrl      = o.scimmaUrl
@@ -33,12 +34,12 @@ heartbeats = ["listen", "Listen", "LISTEN", "listen to my heart beat"]
 count=0
 seq=0
 while (True):
-    et = int(time.time())
-#    message = "{\"timestamp\": %d, \"count\": %d, \"msg\": \"%s\"}" % (et, count, heartbeats[count%4])
+    # send microsecond timestamps
+    et = int(time.time()*1000)
     message = { "timestamp" : et,
-                "count" : count,
-                "beat"  : heartbeats[count%4] }
+                "count"     : count,
+                "beat"      : heartbeats[count%4] }
     sC.write(message);
     print(message)
     count = count + 1
-    time.sleep(30)
+    time.sleep(o.interval)
