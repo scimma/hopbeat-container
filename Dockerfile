@@ -18,8 +18,8 @@ ADD scripts/runHopBeat.py /root/runHopBeat.py
 RUN chmod ugo+rx /root/hopBeat
 RUN chmod ugo+rx /root/runHopBeat.py
 WORKDIR /tmp
-ENV HOP_SECRET
-ENV HOP_REGION
-ENV HOP_SERVER
-ENV HOP_INTERVAL
+ENV HOP_SECRET=
+ENV HOP_REGION=
+ENV HOP_SERVER=
+ENV HOP_INTERVAL=
 ENTRYPOINT ["/root/runHopBeat.py"]
