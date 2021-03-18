@@ -18,17 +18,17 @@ Location     = "%s/config.toml" % configDir
 hopUrl       = "kafka://dev.hop.scimma.org:9092/heartbeat"
 hopInterval  = "30"
 
-if (os.env('HOP_SECRET') is not None):
-    secret = os.env('HOP_SECRET')
+if (os.env.get('HOP_SECRET') is not None):
+    secret = os.env.get('HOP_SECRET')
 
-if (os.env('HOP_REGION') is not None):
-    region = os.env('HOP_REGION')
+if (os.env.get('HOP_REGION') is not None):
+    region = os.env.get('HOP_REGION')
 
-if (os.env('HOP_SERVER') is not None):
-    hopUrl = "kafka://%s/heartbeat" % os.env('HOP_SERVER')
+if (os.env.get('HOP_SERVER') is not None):
+    hopUrl = "kafka://%s/heartbeat" % os.env.get('HOP_SERVER')
 
-if (os.env('HOP_INTERVAL') is not None):
-    hopInterval = os.env('HOP_INTERVAL')
+if (os.env.get('HOP_INTERVAL') is not None):
+    hopInterval = os.env.get('HOP_INTERVAL')
 
 ## Line buffer stdout and stderr
 sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', buffering=1)
