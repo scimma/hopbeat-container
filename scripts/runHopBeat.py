@@ -28,7 +28,7 @@ if (os.env('HOP_SERVER') is not None):
     hopUrl = "kafka://%s/heartbeat" % os.env('HOP_SERVER')
 
 if (os.env('HOP_INTERVAL') is not None):
-    hopInterval = os.env{'HOP_INTERVAL'}
+    hopInterval = os.env('HOP_INTERVAL')
 
 ## Line buffer stdout and stderr
 sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', buffering=1)

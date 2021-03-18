@@ -30,6 +30,12 @@ git tag version-MAJOR.MINOR.RELEASE
 git push origin version-MAJOR.MINOR.RELEASE
 ```
 
+To lookup the version tags already in use:
+
+```
+   aws ecr describe-images --repository-name scimma/hopbeat | jq '.imageDetails[].imageTags[]' | sort
+```
+
 ## TODO
 
 1. Maybe export some metrics to influxdb.
