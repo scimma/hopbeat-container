@@ -16,7 +16,7 @@ sHelp  = "SCiMMA server URL"
 sUrl   = "kafka://dev.hop.scimma.org:9092/heartbeat"
 p = OptionParser(usage="Usage: %prog [options]")
 p.add_option("",   "--scimma",   dest="scimmaUrl",      default=sUrl, help=sHelp)
-p.add_option("",   "--interval", dest="interval",       default=30
+p.add_option("",   "--interval", dest="interval",       default=30)
 p.add_option("-F", "--config",   dest="scimmaConfFile", default="~/shared/kafkacat.conf", help=cHelp)
 (o, a) = p.parse_args()
 
