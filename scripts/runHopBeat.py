@@ -24,8 +24,8 @@ if (os.environ.get('HOP_SECRET') is not None):
 if (os.environ.get('HOP_REGION') is not None):
     region = os.environ.get('HOP_REGION')
 
-if (os.environ.get('HOP_SERVER') is not None):
-    hopUrl = "kafka://%s/heartbeat" % os.environ.get('HOP_SERVER')
+if (os.environ.get('HOP_URL') is not None):
+    hopUrl = os.environ.get('HOP_URL')
 
 if (os.environ.get('HOP_INTERVAL') is not None):
     hopInterval = os.environ.get('HOP_INTERVAL')
