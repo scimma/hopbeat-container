@@ -35,11 +35,11 @@ count=0
 seq=0
 while (True):
     # send microsecond timestamps
-    et = int(time.time()*1000)
+    et = int(time.time()* 10**6)
     message = { "timestamp" : et,
                 "count"     : count,
                 "beat"      : heartbeats[count%4] }
     sC.write(message);
     print(message)
     count = count + 1
-    time.sleep(o.interval)
+    time.sleep(int(o.interval))
