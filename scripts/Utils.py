@@ -6,6 +6,7 @@
 import json
 import subprocess
 import re
+import os
 from hop import models
 from hop import publish
 from hop import io
@@ -24,6 +25,7 @@ def getCreds (region, secret):
   return creds
 
 def writeConfig (loc, creds):
+    os.umask(0o077)
     cfh = open(loc, "w")
     cfh.write("[auth]\n")
     cfh.write("username = \"%s\"\n" % creds["user"])
