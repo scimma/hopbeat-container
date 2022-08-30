@@ -30,12 +30,17 @@ if (os.environ.get('HOP_URL') is not None):
 if (os.environ.get('HOP_INTERVAL') is not None):
     hopInterval = os.environ.get('HOP_INTERVAL')
 
+## Look for creds in the environment, then in AWS secrets manager.
+if (os.environ.get('HOP_CREDS') is not None):
+    creds = u.getCredsFromString(os.environ.get('HOP_CREDS'))
+else:
+    creds = u.getCreds(region, secret)
+
 ## Line buffer stdout and stderr
 sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', buffering=1)
 sys.stderr = os.fdopen(sys.stderr.fileno(), 'w', buffering=1)
 
 os.system("mkdir -p %s" % configDir)
-creds  = u.getCreds(region, secret)
 u.writeConfig(Location, creds)
 
 while True:
