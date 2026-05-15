@@ -1,3 +1,7 @@
+## May 15, 2026 -- version 0.0.27
+
+  1. Update to scimma/client:0.10.1
+
 ## Sep 30, 2021 - version 0.0.21
 
   1. Update to scimma/client:0.5.3
